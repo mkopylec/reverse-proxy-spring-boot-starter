@@ -28,7 +28,7 @@ abstract class RequestProxyHeadersRewritingBasicSpec extends BasicSpec {
         ['Host': 'example.com']                                                   | ['X-Forwarded-For': 'example.com']
         ['Host': 'example.com']                                                   | ['X-Forwarded-Proto': 'http']
         ['Host': 'example.com']                                                   | ['X-Forwarded-Host': 'example.com']
-        ['Host': 'example.com:666']                                               | ['X-Forwarded-Host': 'example.com']
+        ['Host': 'example.com:666']                                               | ['X-Forwarded-Host': 'example.com:666']
         ['Host': 'example.com']                                                   | ['X-Forwarded-Port': '80']
         ['Host': 'example.com:666']                                               | ['X-Forwarded-Port': '666']
     }

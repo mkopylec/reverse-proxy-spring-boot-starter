@@ -38,7 +38,13 @@ abstract class CommonRequestProxyHeadersRewriter implements Valid {
         forwardedFor.add(uri.getAuthority());
         rewrittenHeaders.put(X_FORWARDED_FOR, forwardedFor);
         rewrittenHeaders.set(X_FORWARDED_PROTO, uri.getScheme());
-        rewrittenHeaders.set(X_FORWARDED_HOST, uri.getHost());
+
+        if (uri.getPort() == -1) {
+            rewrittenHeaders.set(X_FORWARDED_HOST, uri.getHost());
+        } else {
+            rewrittenHeaders.set(X_FORWARDED_HOST, uri.getHost() + ":" + uri.getPort());
+        }
+
         rewrittenHeaders.set(X_FORWARDED_PORT, resolvePort(uri));
         headersSetter.accept(rewrittenHeaders);
         log.debug("Request headers rewritten from {} to {}", headers, rewrittenHeaders);
