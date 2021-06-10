@@ -19,6 +19,7 @@ import static org.springframework.util.Assert.hasText;
 public class RequestMappingConfiguration implements Valid {
 
     private String name;
+    private Pattern hostRegex;
     private Pattern pathRegex;
     private RestTemplateConfiguration restTemplateConfiguration;
     private List<RequestForwardingInterceptor> requestForwardingInterceptors;
@@ -27,6 +28,7 @@ public class RequestMappingConfiguration implements Valid {
 
     RequestMappingConfiguration(String name) {
         this.name = name;
+        hostRegex = compile(".*");
         pathRegex = compile("/.*");
         requestForwardingInterceptors = new ArrayList<>();
         unsetRequestForwardingInterceptors = new ArrayList<>();
@@ -39,6 +41,14 @@ public class RequestMappingConfiguration implements Valid {
 
     public String getName() {
         return name;
+    }
+
+    public Pattern getHostRegex() {
+        return hostRegex;
+    }
+
+    void setHostRegex(String hostRegex) {
+        this.hostRegex = compile(hostRegex);
     }
 
     public Pattern getPathRegex() {

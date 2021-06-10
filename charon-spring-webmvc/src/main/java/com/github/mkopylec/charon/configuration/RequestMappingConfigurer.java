@@ -14,6 +14,11 @@ public class RequestMappingConfigurer extends Configurer<RequestMappingConfigura
         return new RequestMappingConfigurer(name);
     }
 
+    public RequestMappingConfigurer hostRegex(String hostRegex) {
+        configuredObject.setHostRegex(hostRegex);
+        return this;
+    }
+
     public RequestMappingConfigurer pathRegex(String pathRegex) {
         configuredObject.setPathRegex(pathRegex);
         return this;

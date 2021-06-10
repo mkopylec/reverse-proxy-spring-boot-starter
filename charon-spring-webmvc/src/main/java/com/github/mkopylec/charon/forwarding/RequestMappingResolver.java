@@ -23,9 +23,12 @@ class RequestMappingResolver {
     }
 
     RequestMappingConfiguration resolveRequestMapping(HttpServletRequest request) {
+        final String serverName = request.getServerName();
         String requestURI = request.getRequestURI();
         List<RequestMappingConfiguration> configurations = requestMappingConfigurations.stream()
-                .filter(configuration -> configuration.getPathRegex().matcher(requestURI).matches())
+                .filter(configuration ->
+                        configuration.getHostRegex().matcher(serverName).matches() &&
+                        configuration.getPathRegex().matcher(requestURI).matches())
                 .collect(toList());
         if (configurations.isEmpty()) {
             log.debug("No request mapping matches {} incoming request", requestURI);
